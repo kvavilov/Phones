@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+
+import com.mysql.fabric.HashShardMapping;
 
 public class MySQLConnector {
 
@@ -70,12 +73,40 @@ public class MySQLConnector {
 		if(this.con == null)
 			return null;
 		
-		String squery = "select Id, Description, Region from Departments where IsNotUsed = ?";
-		ResultSet results = sendPreparedQuery(squery, false);
+		String squery = "select \n"
+				+ "depts.Id as dept_id, \n"
+				+ "depts.Description as dept_description, \n"
+				+ "depts.Region as dept_region, \n"
+				+ "IFNULL(depts_contacts.info_type,0) as contact_type, \n"
+				+ "IFNULL(depts_contacts.info_value,'') as contact_value \n"
+				+ "from Departments as depts \n"
+				+ "left join Departments_contacts as depts_contacts on \n"
+				+ " depts_contacts.department_id = depts.Id \n"
+				+ "where depts.IsNotUsed = ? \n"
+				+ "order by depts.id,depts_contacts.info_type ";
+		//System.out.println(squery);
+
+		ResultSet results = sendPreparedQuery(squery,false);
 		ArrayList<Department> out = new ArrayList<>();
+		int current_deptID = -1;
+		Department dept = null;
+		HashMap<ContactTypes, String> contact = null;
 		while(results.next()){
-			out.add(new Department(results.getInt(1),results.getString(2), null));
+			if(results.getInt(1) != current_deptID)
+			{
+				if(dept != null)
+					{
+					 dept.setContacts(contact);
+					 out.add(dept);
+					}
+				current_deptID = results.getInt(1);
+				dept = new Department(results.getInt(1),results.getString(2), null);
+				//if(results.getInt(4) )
+				
+			}
+			
 		}
+		results.close();
 		return out;
 	}
 }

@@ -1,6 +1,7 @@
 package ru.phones.kav;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class Department {
 	private HashMap<ContactTypes,String> contact;
@@ -12,6 +13,10 @@ public class Department {
 		this.departmentID   = departmentID;
 		this.contact        = contact;
 		this.departmentName = departmentName;
+	}
+	
+	public void setContacts(HashMap<ContactTypes, String> contact){
+		this.contact = contact;
 	}
 	
 	public HashMap<ContactTypes,String> getContactsInfo(){
@@ -28,6 +33,17 @@ public class Department {
 	
 	@Override
 	public String toString() {
-		return getID() + " " + getDepartmentName();
+		String contacts = "";
+		if (this.contact != null){
+			contacts = "{";
+			for(Entry<ContactTypes,String> info: this.contact.entrySet()){
+				if(!contacts.equals("{")){
+					contacts = contacts + " # ";
+				}
+				contacts = contacts + info.getValue();		
+			}
+			contacts = contacts + "}";
+		}
+		return getID() + " " + getDepartmentName() + contacts;
 	}
 }
