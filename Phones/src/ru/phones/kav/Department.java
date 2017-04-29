@@ -40,7 +40,7 @@ public class Department {
 				if(!contacts.equals("{")){
 					contacts = contacts + " # ";
 				}
-				contacts = contacts + info.getValue();		
+				contacts = contacts + info.getKey().getDescription() + " " + info.getValue();		
 			}
 			contacts = contacts + "}";
 		}

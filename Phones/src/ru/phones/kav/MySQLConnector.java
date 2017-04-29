@@ -77,7 +77,7 @@ public class MySQLConnector {
 				+ "depts.Id as dept_id, \n"
 				+ "depts.Description as dept_description, \n"
 				+ "depts.Region as dept_region, \n"
-				+ "IFNULL(depts_contacts.info_type,0) as contact_type, \n"
+				+ "IFNULL(depts_contacts.info_type,-1) as contact_type, \n"
 				+ "IFNULL(depts_contacts.info_value,'') as contact_value \n"
 				+ "from Departments as depts \n"
 				+ "left join Departments_contacts as depts_contacts on \n"
@@ -91,6 +91,7 @@ public class MySQLConnector {
 		int current_deptID = -1;
 		Department dept = null;
 		HashMap<ContactTypes, String> contact = null;
+		ContactTypes[] contancttypes = ContactTypes.values();
 		while(results.next()){
 			if(results.getInt(1) != current_deptID)
 			{
@@ -101,10 +102,12 @@ public class MySQLConnector {
 					}
 				current_deptID = results.getInt(1);
 				dept = new Department(results.getInt(1),results.getString(2), null);
-				//if(results.getInt(4) )
-				
+				contact = new HashMap<>();
 			}
-			
+			if(results.getInt(4) >= 0 && results.getInt(4) < contancttypes.length)
+			{
+				contact.put(contancttypes[results.getInt(4)], results.getString(5));
+			}
 		}
 		results.close();
 		return out;
