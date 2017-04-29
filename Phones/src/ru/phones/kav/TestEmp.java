@@ -3,6 +3,7 @@ package ru.phones.kav;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -37,37 +38,14 @@ public class TestEmp {
 			System.out.println(curEmp.toString());
 		}
 		
-		ArrayList a = new ArrayList();
-		a.add("Bla-bla-bla");
-		a.add(5);
-		for(Object e: a){
-			if(e instanceof Integer){
-				System.out.println("Число!");
-			}
-			else 
-				System.out.println("Строка!");
-			System.out.println(e.getClass());
-		}
-		
+		MySQLConnector connector = new MySQLConnector("root", "240981", "127.0.0.1", "Phones");
 		try {
-			Class cl = Class.forName("ru.phones.kav.MySQLConnector");
-			Method[] m = cl.getDeclaredMethods();
-			for(Method mt : m)
-			{
-				System.out.print(Modifier.toString(mt.getModifiers()) + " " +  mt.getName()+"(");
-				Parameter[] p = mt.getParameters();
-				for(Parameter pt: p)
-				{
-					System.out.print(pt.toString()+",");
-				}
-				System.out.println(");");
-				
-			}
-		} catch (ClassNotFoundException e1) {
+			if(connector.isConnected())
+				System.out.println("Подключились!");
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
-		
 	}
 
 }
