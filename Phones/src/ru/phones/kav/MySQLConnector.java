@@ -81,7 +81,6 @@ public class MySQLConnector {
 				+ " depts_contacts.department_id = depts.Id \n"
 				+ "where depts.IsNotUsed = ? \n"
 				+ "order by depts.id,depts_contacts.info_type ";
-		//System.out.println(squery);
 
 		ResultSet results = sendPreparedQuery(squery,false);
 		ArrayList<Department> out = new ArrayList<>();
@@ -105,6 +104,10 @@ public class MySQLConnector {
 			{
 				contact.put(contancttypes[results.getInt(4)], results.getString(5));
 			}
+		}
+		if(dept != null){
+			dept.setContacts(contact);
+			out.add(dept);
 		}
 		results.close();
 		return out;
