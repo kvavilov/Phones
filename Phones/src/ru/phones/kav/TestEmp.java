@@ -41,7 +41,13 @@ public class TestEmp {
 		MySQLConnector connector = new MySQLConnector("root", "240981", "127.0.0.1", "Phones");
 		try {
 			if(connector.isConnected())
+			{
 				System.out.println("Подключились!");
+				ArrayList<Department> depts = connector.getDepartments();
+				for(Department d: depts){
+					System.out.println(d.toString());
+				}
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

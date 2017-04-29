@@ -25,4 +25,9 @@ public class Department {
 	public int getID(){
 		return this.departmentID;
 	}
+	
+	@Override
+	public String toString() {
+		return getID() + " " + getDepartmentName();
+	}
 }

@@ -63,24 +63,17 @@ public class MySQLConnector {
 		return stmt.executeQuery();
 	}
 	
-	public ArrayList<Department> getDepartments()
+	public ArrayList<Department> getDepartments() throws SQLException
 	{
 		if(this.con == null)
 			return null;
 		
-		String squery = "select Id, Description, Region from Department where Id = ?";
-		try{
-			ResultSet results = sendPreparedQuery(squery, 1);
-			ArrayList<Department> out = new ArrayList<>();
-			while(results.next()){
-				out.add(new Department(results.getInt(0),results.getString(1), null));
-			}
-		}catch (Exception e) {
-			return null;
+		String squery = "select Id, Description, Region from Departments where Id = ?";
+		ResultSet results = sendPreparedQuery(squery, 1);
+		ArrayList<Department> out = new ArrayList<>();
+		while(results.next()){
+			out.add(new Department(results.getInt(1),results.getString(2), null));
 		}
-		
-		
-		
-		return null;
+		return out;
 	}
 }
