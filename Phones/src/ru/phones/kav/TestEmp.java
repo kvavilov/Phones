@@ -69,6 +69,7 @@ public class TestEmp {
 		}
 		
 		System.out.println("Priveeet");
+		System.out.println("Privet 2");
 		
 	}
 
