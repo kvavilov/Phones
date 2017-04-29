@@ -50,6 +50,8 @@ public class MySQLConnector {
 			stmt.setDate(index, (java.sql.Date)param);
 		else if(param instanceof BigDecimal)
 			stmt.setBigDecimal(index, (BigDecimal)param);
+		else if(param instanceof Boolean)
+			stmt.setBoolean(index, (Boolean)param);
 		else 
 			throw EUnknownParamterType;
 	}
@@ -68,8 +70,8 @@ public class MySQLConnector {
 		if(this.con == null)
 			return null;
 		
-		String squery = "select Id, Description, Region from Departments where Id = ?";
-		ResultSet results = sendPreparedQuery(squery, 1);
+		String squery = "select Id, Description, Region from Departments where IsNotUsed = ?";
+		ResultSet results = sendPreparedQuery(squery, false);
 		ArrayList<Department> out = new ArrayList<>();
 		while(results.next()){
 			out.add(new Department(results.getInt(1),results.getString(2), null));
