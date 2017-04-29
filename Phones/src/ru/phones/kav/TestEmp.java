@@ -68,11 +68,6 @@ public class TestEmp {
 			e1.printStackTrace();
 		}
 		
-		System.out.println("Priveeet");
-		System.out.println("Privet 2");
-		System.out.println("Privet 3");
-		System.out.println("Privet 4");
-		
 	}
 
 }
