@@ -68,6 +68,8 @@ public class TestEmp {
 			e1.printStackTrace();
 		}
 		
+		System.out.println("Priveeet");
+		
 	}
 
 }
