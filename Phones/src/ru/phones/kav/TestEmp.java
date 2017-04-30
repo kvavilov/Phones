@@ -2,12 +2,14 @@ package ru.phones.kav;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TestEmp {
 
 	public static void main(String[] args) {
 		//
-		PhoneSQLConnector connector = new PhoneSQLConnector("mysql","root", "240981", "127.0.0.1", "Phones");
+		HashMap<String,String> settings = PhonesSettings.readSettings();
+		PhoneSQLConnector connector = new PhoneSQLConnector(settings.get("SQLserverSpec"),settings.get("SQLserverUID"), settings.get("SQLserverPassword"), settings.get("SQLserverAddr"), settings.get("SQLserverDatabase"));
 		try {
 			if(connector.isConnected())
 			{
