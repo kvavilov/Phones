@@ -110,6 +110,8 @@ public class MySQLConnector {
 			out.add(dept);
 		}
 		results.close();
+		//ывравылоапловыарплоравыплоаврпл
+		//вывопдлоыавпдлоавдлопвадлопвпв
 		return out;
 	}
 }
