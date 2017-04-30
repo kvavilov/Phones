@@ -51,7 +51,7 @@ public class TestEmp {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println("Preved");
 		//System.out.println(ContactTypes.valueOf("1"));
 	}
 
