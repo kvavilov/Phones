@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public class PhoneSQLConnector {
+public class PhonesSQLConnector {
 
 	private static final SQLException EUnknownParamterType = null;
 	private Connection con;
 	
-	public PhoneSQLConnector(String serverspec,String uid,String password,String srv,String database) {
+	public PhonesSQLConnector(String serverspec,String uid,String password,String srv,String database) {
 		Connect(serverspec, uid, password, srv, database);
 	}
 	

@@ -9,7 +9,7 @@ public class TestEmp {
 	public static void main(String[] args) {
 		//
 		HashMap<String,String> settings = PhonesSettings.readSettings();
-		PhoneSQLConnector connector = new PhoneSQLConnector(settings.get("SQLserverSpec"),settings.get("SQLserverUID"), settings.get("SQLserverPassword"), settings.get("SQLserverAddr"), settings.get("SQLserverDatabase"));
+		PhonesSQLConnector connector = new PhonesSQLConnector(settings.get("SQLserverSpec"),settings.get("SQLserverUID"), settings.get("SQLserverPassword"), settings.get("SQLserverAddr"), settings.get("SQLserverDatabase"));
 		try {
 			if(connector.isConnected())
 			{
