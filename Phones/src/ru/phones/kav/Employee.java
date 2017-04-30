@@ -10,14 +10,15 @@ public class Employee {
 	private String 		  employeeMiddleName;
 	private String 		  employeeLastName;
 	private int 		  employeeId;
-	private Department 	  department;
+	private int 		  departmentId;
 	
-	public Employee(int employeeId,String employeeFirstName,String employeeMiddleName,String employeeLastName,HashMap<ContactTypes,String> contact) {
+	public Employee(int employeeId,String employeeFirstName,String employeeMiddleName,String employeeLastName,int departmentId,HashMap<ContactTypes,String> contact) {
 		this.employeeId			= employeeId;
 		this.contact     	    = contact;
 		this.employeeFirstName  = employeeFirstName;
 		this.employeeMiddleName = employeeMiddleName;
 		this.employeeLastName   = employeeLastName;
+		this.departmentId       = departmentId;
 	}
 	
 	public String getEmployeeFirstName(){
@@ -44,22 +45,25 @@ public class Employee {
 		return this.employeeId;
 	}
 	
-	public Department getDepartment(){
-		return this.department;
+	public int getdepartmentID(){
+		return this.departmentId;
 	}
 	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		String contacts = "{";
-		for(Entry<ContactTypes,String> info: this.contact.entrySet()){
-			if(!contacts.equals("{")){
-				contacts = contacts + " # ";
+		String contacts = "";
+		if(this.contact != null){ 
+			contacts = "{";
+			for(Entry<ContactTypes,String> info: this.contact.entrySet()){
+				if(!contacts.equals("{")){
+					contacts = contacts + " # ";
+				}
+				contacts = contacts + info.getValue();		
 			}
-			contacts = contacts + info.getValue();		
+			contacts = contacts + "}";
 		}
-		contacts = contacts + "}";
-		return "{"+this.employeeFirstName + "," + this.employeeMiddleName+","+this.employeeLastName + " : " + contacts + "}";   
+		return "{"+this.employeeFirstName + "," + this.employeeMiddleName+","+this.employeeLastName + ", deptID=" + this.departmentId + " : " + contacts + "}";   
 	}
 
 }

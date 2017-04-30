@@ -9,7 +9,7 @@ public class Region {
 		this.regionDescription = regionDescription;
 	}
 	
-	public int getRegionId(){
+	public int getID(){
 		return this.regionId;
 	}
 	

@@ -77,9 +77,12 @@ public class PhonesSQLConnector {
 				+ "  reg.IsNotUsed = ? \n"
 				+ "order by reg.ID ";
 		ResultSet results = sendPreparedQuery(squery, false);
+		int colId   = results.findColumn("regionId");
+		int colDesc = results.findColumn("regionDescription");
+		
 		ArrayList<Region> out = new ArrayList<>();
 		while (results.next()){
-			out.add(new Region(results.getInt(1), results.getString(2)));
+			out.add(new Region(results.getInt(colId), results.getString(colDesc)));
 		}
 		return out;
 	}
@@ -87,6 +90,9 @@ public class PhonesSQLConnector {
 	public ArrayList<Department> getDepartmentsByRegion(Region region) throws SQLException
 	{
 		if(this.con == null)
+			return null;
+		
+		if(region == null)
 			return null;
 		
 		String squery = "select \n"
@@ -101,28 +107,28 @@ public class PhonesSQLConnector {
 				+ "where depts.IsNotUsed = ? \n"
 				+ " and depts.Region = ? "
 				+ "order by depts.id,depts_contacts.info_type ";
-
-		ResultSet results = sendPreparedQuery(squery,false,region.getRegionId());
+		
+		ResultSet results = sendPreparedQuery(squery,false,region.getID());
 		ArrayList<Department> out = new ArrayList<>();
 		int current_deptID = -1;
 		Department dept = null;
 		HashMap<ContactTypes, String> contact = null;
 		ContactTypes[] contancttypes = ContactTypes.values();
 		while(results.next()){
-			if(results.getInt(1) != current_deptID)
+			if(results.getInt("dept_id") != current_deptID)
 			{
 				if(dept != null)
 					{
 					 dept.setContacts(contact);
 					 out.add(dept);
 					}
-				current_deptID = results.getInt(1);
-				dept = new Department(results.getInt(1),results.getString(2), null);
+				current_deptID = results.getInt("dept_id");
+				dept = new Department(results.getInt("dept_id"),results.getString("dept_description"), null);
 				contact = new HashMap<>();
 			}
-			if(results.getInt(4) >= 0 && results.getInt(4) < contancttypes.length)
+			if(results.getInt("contact_type") >= 0 && results.getInt("contact_type") < contancttypes.length)
 			{
-				contact.put(contancttypes[results.getInt(4)], results.getString(5));
+				contact.put(contancttypes[results.getInt("contact_type")], results.getString("contact_value"));
 			}
 		}
 		if(dept != null){
@@ -154,35 +160,35 @@ public class PhonesSQLConnector {
 				+ "  depts.ID = emps.Department_ID \n"
 				+ " and \n"
 				+ "  depts.IsNotUsed = ? \n"
-				+ " and \n"
-				+ "  depts.Region = ? \n"
+				+ " and (depts.id = ? or ? = true) \n"
+				+ " and (depts.Region = ? or ? = true) \n"
 				+ " \n"
 				+ "left join Employers_contacts as emps_contacts on \n"
 				+ " emps_contacts.Employer_ID = emps.Id \n"
 				+ "where emps.IsNotUsed = ? \n"
 				+ "order by emps.ID,IFNULL(emps_contacts.info_type,-1) ";
 
-		ResultSet results = sendPreparedQuery(squery,false,region.getRegionId());
+		ResultSet results = sendPreparedQuery(squery,false,department==null?-1:department.getID(),department==null?true:false,region==null?-1:region.getID(),region==null?true:false,false);
 		ArrayList<Employee> out = new ArrayList<>();
-		int current_deptID = -1;
+		int current_empID = -1;
 		Employee emp = null;
 		HashMap<ContactTypes, String> contact = null;
 		ContactTypes[] contancttypes = ContactTypes.values();
 		while(results.next()){
-			if(results.getInt(1) != current_deptID)
+			if(results.getInt("emp_id") != current_empID)
 			{
 				if(emp != null)
 					{
-					emp.setContacts(contact);
+					 emp.setContacts(contact);
 					 out.add(emp);
 					}
-				current_deptID = results.getInt(1);
-				//emp = new Employee(results.getInt(1),results.getString(2), null);
+				current_empID = results.getInt("emp_id");
+				emp = new Employee(results.getInt("emp_id"),results.getString("emp_firstname"),results.getString("emp_midllename"),results.getString("emp_lastname"),results.getInt("emp_department"), null);
 				contact = new HashMap<>();
 			}
-			if(results.getInt(4) >= 0 && results.getInt(4) < contancttypes.length)
+			if(results.getInt("contact_type") >= 0 && results.getInt("contact_type") < contancttypes.length)
 			{
-				contact.put(contancttypes[results.getInt(4)], results.getString(5));
+				contact.put(contancttypes[results.getInt("contact_type")], results.getString("contact_value"));
 			}
 		}
 		if(emp != null){
