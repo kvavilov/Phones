@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `Employers` (
   `MiddleName` varchar(255) NOT NULL,
   `LastName` varchar(255) NOT NULL,
   `Department_ID` int(5) NOT NULL,
-  `IsFired` tinyint(1) NOT NULL,
+  `IsNotUsed` tinyint(1) NOT NULL,
   `IsChief` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

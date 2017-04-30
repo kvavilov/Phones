@@ -36,6 +36,10 @@ public class Employee {
 		return this.contact;
 	}
 	
+	public void setContacts(HashMap<ContactTypes, String> contact){
+		this.contact = contact;
+	}
+	
 	public int getID(){
 		return this.employeeId;
 	}

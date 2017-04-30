@@ -132,4 +132,64 @@ public class PhonesSQLConnector {
 		results.close();
 		return out;
 	}
+	
+	public ArrayList<Employee> getEmployers(Region region,Department department) throws SQLException{
+		
+		if(this.con == null)
+			return null;
+		
+		String squery = ""
+				+ "select \n"
+				+ "  emps.ID as emp_id, \n"
+				+ "  emps.FirstName as emp_firstname, \n"
+				+ "  emps.MiddleName as emp_midllename, \n"
+				+ "  emps.LastName as emp_lastname, \n"
+				+ "  emps.Department_ID as emp_department, \n"
+				+ "	 depts.Region as dept_region, \n"
+				+ "  IFNULL(emps_contacts.info_type,-1) as contact_type, \n"
+				+ "  IFNULL(emps_contacts.info_value,'') as contact_value \n"
+				+ "from Employers as emps \n"
+				+ " \n"
+				+ "inner join Departments as depts on \n"
+				+ "  depts.ID = emps.Department_ID \n"
+				+ " and \n"
+				+ "  depts.IsNotUsed = ? \n"
+				+ " and \n"
+				+ "  depts.Region = ? \n"
+				+ " \n"
+				+ "left join Employers_contacts as emps_contacts on \n"
+				+ " emps_contacts.Employer_ID = emps.Id \n"
+				+ "where emps.IsNotUsed = ? \n"
+				+ "order by emps.ID,IFNULL(emps_contacts.info_type,-1) ";
+
+		ResultSet results = sendPreparedQuery(squery,false,region.getRegionId());
+		ArrayList<Employee> out = new ArrayList<>();
+		int current_deptID = -1;
+		Employee emp = null;
+		HashMap<ContactTypes, String> contact = null;
+		ContactTypes[] contancttypes = ContactTypes.values();
+		while(results.next()){
+			if(results.getInt(1) != current_deptID)
+			{
+				if(emp != null)
+					{
+					emp.setContacts(contact);
+					 out.add(emp);
+					}
+				current_deptID = results.getInt(1);
+				//emp = new Employee(results.getInt(1),results.getString(2), null);
+				contact = new HashMap<>();
+			}
+			if(results.getInt(4) >= 0 && results.getInt(4) < contancttypes.length)
+			{
+				contact.put(contancttypes[results.getInt(4)], results.getString(5));
+			}
+		}
+		if(emp != null){
+			emp.setContacts(contact);
+			out.add(emp);
+		}
+		results.close();
+		return out;
+	}
 }
