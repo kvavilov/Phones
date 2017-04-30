@@ -43,9 +43,13 @@ public class TestEmp {
 			if(connector.isConnected())
 			{
 				System.out.println("Подключились!");
-				ArrayList<Department> depts = connector.getDepartments();
-				for(Department d: depts){
-					System.out.println(d.toString());
+				ArrayList<Region> regions = connector.getRegions();
+				for(Region region : regions){
+					System.out.println("Департаменты региона: "+region.getRegionDescription());
+					ArrayList<Department> depts = connector.getDepartmentsByRegion(region);
+					for(Department d: depts){
+						System.out.println(d.toString());
+					}
 				}
 			}
 		} catch (SQLException e) {

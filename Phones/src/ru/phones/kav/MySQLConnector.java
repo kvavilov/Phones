@@ -65,7 +65,26 @@ public class MySQLConnector {
 		return stmt.executeQuery();
 	}
 	
-	public ArrayList<Department> getDepartments() throws SQLException
+	public ArrayList<Region> getRegions() throws SQLException{
+		if(this.con == null)
+			return null;
+		
+		String squery = "select "
+				+ "reg.ID as regionId, \n"
+				+ "reg.Description as regionDescription \n"
+				+ "from Regions reg \n"
+				+ "where \n"
+				+ "  reg.IsNotUsed = ? \n"
+				+ "order by reg.ID ";
+		ResultSet results = sendPreparedQuery(squery, false);
+		ArrayList<Region> out = new ArrayList<>();
+		while (results.next()){
+			out.add(new Region(results.getInt(1), results.getString(2)));
+		}
+		return out;
+	}
+	
+	public ArrayList<Department> getDepartmentsByRegion(Region region) throws SQLException
 	{
 		if(this.con == null)
 			return null;
@@ -80,9 +99,10 @@ public class MySQLConnector {
 				+ "left join Departments_contacts as depts_contacts on \n"
 				+ " depts_contacts.department_id = depts.Id \n"
 				+ "where depts.IsNotUsed = ? \n"
+				+ " and depts.Region = ? "
 				+ "order by depts.id,depts_contacts.info_type ";
 
-		ResultSet results = sendPreparedQuery(squery,false);
+		ResultSet results = sendPreparedQuery(squery,false,region.getRegionId());
 		ArrayList<Department> out = new ArrayList<>();
 		int current_deptID = -1;
 		Department dept = null;
@@ -110,8 +130,6 @@ public class MySQLConnector {
 			out.add(dept);
 		}
 		results.close();
-		//ывравылоапловыарплоравыплоаврпл
-		//вывопдлоыавпдлоавдлопвадлопвпв
 		return out;
 	}
 }
