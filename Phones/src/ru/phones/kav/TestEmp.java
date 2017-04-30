@@ -1,11 +1,7 @@
 package ru.phones.kav;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Parameter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class TestEmp {
 
@@ -23,6 +19,9 @@ public class TestEmp {
 					for(Department d: depts){
 						System.out.println(d.toString());
 					}
+					Department df = depts.stream().filter(x -> x.getID() == 1).findFirst().orElse(null);
+					if (df != null)
+						System.out.println("Найдено подразделение: "+df.toString());
 				}
 			}
 		} catch (SQLException e) {
