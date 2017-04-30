@@ -7,7 +7,7 @@ public final class PhonesSettings {
 	
 	public static HashMap<String,String> readSettings(){
 		// Здесь будем читать настройки 
-		// Пока в достаточно задать их статически
+		// Пока достаточно задать их статически
 		HashMap<String,String> readedsettings= new HashMap<>();
 		readedsettings.put("SQLserverSpec"    , "mysql");
 		readedsettings.put("SQLserverAddr"    , "localhost");

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Апр 30 2017 г., 15:01
+-- Время создания: Апр 30 2017 г., 19:50
 -- Версия сервера: 5.6.35
 -- Версия PHP: 5.5.14
 
@@ -62,7 +62,8 @@ CREATE TABLE IF NOT EXISTS `Employers` (
   `MiddleName` varchar(255) NOT NULL,
   `LastName` varchar(255) NOT NULL,
   `Department_ID` int(5) NOT NULL,
-  `IsFired` tinyint(1) NOT NULL
+  `IsFired` tinyint(1) NOT NULL,
+  `IsChief` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -89,6 +90,21 @@ CREATE TABLE IF NOT EXISTS `Regions` (
   `ID` int(11) NOT NULL,
   `Description` varchar(255) NOT NULL,
   `IsNotUsed` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `Users`
+--
+
+DROP TABLE IF EXISTS `Users`;
+CREATE TABLE IF NOT EXISTS `Users` (
+  `ID` int(5) NOT NULL,
+  `UserName` varchar(50) NOT NULL,
+  `UserDescription` varchar(255) NOT NULL,
+  `IsInactive` tinyint(1) NOT NULL,
+  `PasswordHash` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -127,6 +143,12 @@ ALTER TABLE `Regions`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Индексы таблицы `Users`
+--
+ALTER TABLE `Users`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -145,6 +167,11 @@ ALTER TABLE `Employers`
 --
 ALTER TABLE `Regions`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблицы `Users`
+--
+ALTER TABLE `Users`
+  MODIFY `ID` int(5) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
