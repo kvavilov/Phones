@@ -7,7 +7,7 @@ public class TestEmp {
 
 	public static void main(String[] args) {
 		//
-		MySQLConnector connector = new MySQLConnector("root", "240981", "127.0.0.1", "Phones");
+		PhoneSQLConnector connector = new PhoneSQLConnector("mysql","root", "240981", "127.0.0.1", "Phones");
 		try {
 			if(connector.isConnected())
 			{

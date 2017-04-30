@@ -10,19 +10,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public class MySQLConnector {
+public class PhoneSQLConnector {
 
 	private static final SQLException EUnknownParamterType = null;
 	private Connection con;
 	
-	public MySQLConnector(String uid,String password,String srv,String database) {
-		Connect(uid, password, srv, database);
+	public PhoneSQLConnector(String serverspec,String uid,String password,String srv,String database) {
+		Connect(serverspec, uid, password, srv, database);
 	}
 	
-	public boolean Connect(String uid,String password,String srv,String database)
+	public boolean Connect(String serverspec,String uid,String password,String srv,String database)
 	{
 		try {
-			this.con = DriverManager.getConnection("jdbc:mysql://"+srv+"/"+database, uid, password);
+			this.con = DriverManager.getConnection("jdbc:"+serverspec+"://"+srv+"/"+database, uid, password);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
