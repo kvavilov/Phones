@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Апр 30 2017 г., 14:56
+-- Время создания: Апр 30 2017 г., 15:01
 -- Версия сервера: 5.6.35
 -- Версия PHP: 5.5.14
 
@@ -44,9 +44,9 @@ CREATE TABLE IF NOT EXISTS `Departments` (
 
 DROP TABLE IF EXISTS `Departments_contacts`;
 CREATE TABLE IF NOT EXISTS `Departments_contacts` (
-  `department_id` int(5) NOT NULL,
-  `info_type` int(1) NOT NULL,
-  `info_value` varchar(255) NOT NULL
+  `Department_id` int(5) NOT NULL,
+  `Info_type` int(1) NOT NULL,
+  `Info_value` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -73,9 +73,9 @@ CREATE TABLE IF NOT EXISTS `Employers` (
 
 DROP TABLE IF EXISTS `Employers_contacts`;
 CREATE TABLE IF NOT EXISTS `Employers_contacts` (
-  `employer_ID` int(10) NOT NULL,
-  `contact_type` int(1) NOT NULL,
-  `contact_value` varchar(255) NOT NULL
+  `Employer_ID` int(10) NOT NULL,
+  `Info_type` int(1) NOT NULL,
+  `Info_value` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -105,8 +105,8 @@ ALTER TABLE `Departments`
 -- Индексы таблицы `Departments_contacts`
 --
 ALTER TABLE `Departments_contacts`
-  ADD PRIMARY KEY (`department_id`,`info_type`),
-  ADD UNIQUE KEY `department_id` (`department_id`,`info_type`);
+  ADD PRIMARY KEY (`Department_id`,`Info_type`),
+  ADD UNIQUE KEY `department_id` (`Department_id`,`Info_type`);
 
 --
 -- Индексы таблицы `Employers`
@@ -118,7 +118,7 @@ ALTER TABLE `Employers`
 -- Индексы таблицы `Employers_contacts`
 --
 ALTER TABLE `Employers_contacts`
-  ADD PRIMARY KEY (`employer_ID`,`contact_type`);
+  ADD PRIMARY KEY (`Employer_ID`,`Info_type`);
 
 --
 -- Индексы таблицы `Regions`
