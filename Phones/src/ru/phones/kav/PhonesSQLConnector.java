@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class PhonesSQLConnector {
 
-	private static final SQLException EUnknownParamterType = null;
+	//private static final SQLException EUnknownParamterType = null;
 	private Connection con;
 	
 	public PhonesSQLConnector(String serverspec,String uid,String password,String srv,String database) {
@@ -53,7 +53,7 @@ public class PhonesSQLConnector {
 		else if(param instanceof Boolean)
 			stmt.setBoolean(index, (Boolean)param);
 		else 
-			throw EUnknownParamterType;
+			throw new SQLException("Неизвестный тип параметра!");
 	}
 	
 	private ResultSet sendPreparedQuery(String query,Object...params) throws SQLException{
